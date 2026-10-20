@@ -1,2 +1,2 @@
 # web-2
-website https://github.com/bungagadiza25/web-2/settings/pages
+website  https://bungagadiza25.github.io/web-2/
