@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Farming</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef5ee;
+            color: #26382b;
+            margin: 0;
+        }
+
+        header {
+            background: #267344;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        main {
+            max-width: 650px;
+            margin: 25px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px #00000012;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-top: 7px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #267344;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #hasil {
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #e5f4e8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Smart Farming</h1>
+        <p>Sistem Simulasi Kebutuhan Air Tanaman</p>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Data Lingkungan</h2>
+
+            <label for="kelembapan">
+                Kelembapan Tanah (%)
+            </label>
+            <input type="number" id="kelembapan"
+                   min="0" max="100" placeholder="Contoh: 30">
+
+            <label for="hujan">
+                Curah Hujan (mm)
+            </label>
+            <input type="number" id="hujan"
+                   min="0" placeholder="Contoh: 5">
+
+            <label for="suhu">
+                Suhu Lingkungan (°C)
+            </label>
+            <input type="number" id="suhu"
+                   min="-50" max="60" placeholder="Contoh: 32">
+
+            <button onclick="analisisTanaman()">
+                Analisis Data
+            </button>
+
+            <div id="hasil" aria-live="polite">
+                Masukkan data untuk melihat rekomendasi.
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Peran Teknologi HPC</h2>
+            <p>
+                HPC dapat memproses data pertanian dalam
+                jumlah besar secara paralel, seperti data
+                cuaca, kelembapan tanah, dan kebutuhan air.
+                Hasil analisis dapat dikirim ke website
+                untuk membantu petani mengambil keputusan.
+            </p>
+            <p>
+                Program ini merupakan simulasi sederhana
+                dan belum terhubung dengan infrastruktur HPC.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        Studi Kasus Informatika | Smart Farming
+    </footer>
+
+    <script>
+        function analisisTanaman() {
+            const kelembapan =
+                document.getElementById("kelembapan").value;
+            const hujan =
+                document.getElementById("hujan").value;
+            const suhu =
+                document.getElementById("suhu").value;
+            const hasil = document.getElementById("hasil");
+
+            if (kelembapan === "" || hujan === "" ||
+                suhu === "") {
+                hasil.textContent =
+                    "Silakan isi semua data terlebih dahulu.";
+                return;
+            }
+
+            const tanah = Number(kelembapan);
+            const curah = Number(hujan);
+            const temperatur = Number(suhu);
+
+            if (!Number.isFinite(tanah) ||
+                !Number.isFinite(curah) ||
+                !Number.isFinite(temperatur) ||
+                tanah < 0 || tanah > 100 ||
+                curah < 0 || temperatur < -50 ||
+                temperatur > 60) {
+                hasil.textContent =
+                    "Data tidak valid. Periksa kembali input.";
+                return;
+            }
+
+            let rekomendasi;
+
+            if (tanah < 30 && curah < 10) {
+                rekomendasi =
+                    "Tanah relatif kering. Pertimbangkan penyiraman.";
+            } else if (tanah < 50 && curah < 20) {
+                rekomendasi =
+                    "Kelembapan relatif rendah. Pantau kebutuhan air.";
+            } else if (tanah >= 80) {
+                rekomendasi =
+                    "Tanah sangat lembap. Periksa drainase.";
+            } else {
+                rekomendasi =
+                    "Kelembapan cukup. Lanjutkan pemantauan.";
+            }
+
+            if (temperatur >= 35) {
+                rekomendasi +=
+                    " Suhu tinggi, periksa kondisi tanaman.";
+            }
+
+            hasil.textContent =
+                "Hasil Analisis: " + rekomendasi;
+        }
+    </script>
+</body>
+</html>
